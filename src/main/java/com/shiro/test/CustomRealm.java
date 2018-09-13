@@ -6,6 +6,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
@@ -20,9 +21,11 @@ public class CustomRealm extends AuthorizingRealm{
 
     String realmName = "customRealm";
 
+    String salt = "shiro";//密码加盐
+
     {
-        userMap.put("zhangsan","123");
-        userMap.put("lisi","456");
+        userMap.put("zhangsan", new Md5Hash("123" + salt).toString());
+        userMap.put("lisi", new Md5Hash("456" + salt).toString());
 
         super.setName(realmName);//设置realm名称
     }
